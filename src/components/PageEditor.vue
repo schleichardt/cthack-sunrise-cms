@@ -8,14 +8,16 @@
         <input class="form-control" id="key" type="text" v-bind:value="key">
       </div>
       <div class="form-group">
-        <button type="button">[]</button>
+        <button type="button" @click="addArray">[]</button>
         <button type="button">{}</button>
       </div>
       <label>Fields:</label>
       <div class="input-group" v-for="fieldName in Object.keys(fields)" :key="fieldName">
-        <label :for="fieldName">{{fieldName}}</label>
-        <input class="form-control" :id="fieldName" type="text" v-model="fields[fieldName]">
-        <button type="button" @click="deleteField(fieldName)">Delete</button>
+        <div v-if="type(fieldName) === 'string'">
+          <label :for="fieldName">{{fieldName}}</label>
+          <input class="form-control" :id="fieldName" type="text" v-model="fields[fieldName]">
+          <button type="button" @click="deleteField(fieldName)">Delete</button>
+        </div>
       </div>
       <div class="input-group">
         <input class="form-control" :id="newFieldKey" type="text" v-model="newFieldKey">
@@ -32,7 +34,18 @@ export default {
   data () {
     return {
       key: 'home',
-      fields: { msg: 'welcome to sunrise' },
+      fields: {
+        banner: [
+          {
+            title: 'Sommer Essentials',
+            subtitle: 'Die wichtigsten Stücke des Sommer Trends 2016',
+            linkLabel: 'Jetzt bestellen',
+            link: '/de/men',
+            backgroundImage: '/assets/img/cms/leather1-4to3.jpg'
+          }
+        ],
+        msg: 'welcome to sunrise'
+      },
       newFieldKey: 'new-field',
       newFieldValue: 'Lorem Ipsum'
     }
@@ -43,6 +56,9 @@ export default {
     },
     deleteField: function (fieldName) {
       this.$delete(this.fields, fieldName)
+    },
+    type: function (fieldName) {
+      return typeof this.fields[fieldName]
     }
   }
 }
