@@ -1,0 +1,41 @@
+{
+  "id": "id-cms-pages-home",
+  "container": "cms-pages",
+  "key": "home",
+  "value": {
+    "content": {
+      "banner": [{
+        "title": "Sommer Essentials",
+        "subtitle": "Die wichtigsten Stücke des Sommer Trends 2016",
+        "linkLabel": "Jetzt bestellen",
+        "link": "/de/men",
+        "backgroundImage": "/assets/img/cms/leather1-4to3.jpg"
+      }],
+      "msg": "welcome to sunrise"
+    },
+    "dependencies": [
+      {
+        "id": "id-common-header",
+        "typeId": "key-value-document",
+        "obj": {
+          "id": "id-common-header",
+          "container": "cms-pages",
+          "key": "common-header",
+          "value": {
+            "content": {
+              "header": {
+                "shopName": "Sunrise",
+                "shopLogo": "/assets/img/cms/logo.svg"
+              }
+            },
+            "dependencies": []
+          }
+        }
+      },
+      {
+        "id": "whatever",
+        "typeId": "key-value-document"
+      }
+    ]
+  }
+}
