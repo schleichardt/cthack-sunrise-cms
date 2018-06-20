@@ -8,13 +8,19 @@
         <input class="form-control" id="key" type="text" v-bind:value="key">
       </div>
       <div class="form-group">
-        <button type="button" @click="addString">""</button>
         <button type="button">[]</button>
         <button type="button">{}</button>
       </div>
-      <div class="form-group" v-for="fieldName in Object.keys(fields)" v-bind:key="fieldName">
+      <label>Fields:</label>
+      <div class="input-group" v-for="fieldName in Object.keys(fields)" :key="fieldName">
         <label :for="fieldName">{{fieldName}}</label>
-        <input class="form-control" :id="fieldName" type="text" v-bind:value="fields[fieldName]">
+        <input class="form-control" :id="fieldName" type="text" v-model="fields[fieldName]">
+        <button type="button" @click="deleteField(fieldName)">Delete</button>
+      </div>
+      <div class="input-group">
+        <input class="form-control" :id="newFieldKey" type="text" v-model="newFieldKey">
+        <input class="form-control" :id="newFieldValue" type="text" v-model="newFieldValue">
+        <button type="button" @click="addField">Add</button>
       </div>
     </form>
   </div>
@@ -26,12 +32,17 @@ export default {
   data () {
     return {
       key: 'home',
-      fields: { msg: 'welcome to sunrise' }
+      fields: { msg: 'welcome to sunrise' },
+      newFieldKey: 'new-field',
+      newFieldValue: 'Lorem Ipsum'
     }
   },
   methods: {
-    addString: function (event) {
-      this.$set(this.fields, 'new-field', 'new-value')
+    addField: function () {
+      this.$set(this.fields, this.newFieldKey, this.newFieldValue)
+    },
+    deleteField: function (fieldName) {
+      this.$delete(this.fields, fieldName)
     }
   }
 }
@@ -39,18 +50,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>
