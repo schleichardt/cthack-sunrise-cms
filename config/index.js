@@ -10,7 +10,23 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/auth/**': {
+        target: 'https://auth.commercetools.com/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/auth': ''
+        }
+      },
+      '/api/**': {
+        target: 'https://api.commercetools.com/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    },
+
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
