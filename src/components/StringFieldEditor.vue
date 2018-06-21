@@ -1,12 +1,13 @@
 <template>
   <div>
-    <form class="form-inline">
-      <div class="form-group">
-        <label :for="formInputId">{{name}}</label>
-        <input v-model="newValue" type="text" class="form-control" :id="formInputId">
+    <form>
+      <div class="form-group row">
+        <label :for="formInputId" class="col-sm-2 col-form-label">{{name}}</label>
+        <div class="col-sm-10">
+          <input v-model="newValue" type="text" class="form-control" :id="formInputId">
+        </div>
       </div>
     </form>
-
   </div>
 </template>
 

@@ -20,5 +20,5 @@ export default {
 </script>
 
 <style scoped>
-  .array-entry {border: 1px solid black; margin-bottom: 10px;}
+  .array-entry {border: 1px solid black; margin-bottom: 10px; padding-top: 15px;}
 </style>
