@@ -1,30 +1,29 @@
 <template>
   <div>
-    {{fields}}
-
-    <form>
-      <div class="form-group">
-        <label for="key">Key:</label>
-        <input class="form-control" id="key" type="text" v-bind:value="key">
-      </div>
-      <div class="form-group">
-        <button type="button" @click="addArray">[]</button>
-        <button type="button">{}</button>
-      </div>
-      <label>Fields:</label>
-      <div class="input-group" v-for="fieldName in Object.keys(fields)" :key="fieldName">
-        <div v-if="type(fieldName) === 'string'">
-          <label :for="fieldName">{{fieldName}}</label>
-          <input class="form-control" :id="fieldName" type="text" v-model="fields[fieldName]">
-          <button type="button" @click="deleteField(fieldName)">Delete</button>
-        </div>
-      </div>
-      <div class="input-group">
-        <input class="form-control" :id="newFieldKey" type="text" v-model="newFieldKey">
-        <input class="form-control" :id="newFieldValue" type="text" v-model="newFieldValue">
-        <button type="button" @click="addField">Add</button>
-      </div>
-    </form>
+    {{ fields }}
+    <b-form>
+      <b-form-group label="Key">
+        <b-form-input id="key" type="text" :value="key">
+        </b-form-input>
+      </b-form-group>
+      <b-form-group label="Fields">
+        <b-input-group v-for="fieldName in Object.keys(fields)" :key="fieldName">
+          <div v-if="type(fieldName) === 'string'">
+            <label :for="fieldName">{{fieldName}}</label>
+            <b-form-input :id="fieldName" type="text" v-model="fields[fieldName]">
+            </b-form-input>
+            <b-button type="button" @click="deleteField(fieldName)">Delete</b-button>
+          </div>
+        </b-input-group>
+          <b-form-input class="form-control" type="text" v-model="newFieldKey"/>
+          <b-form-radio-group id="newFieldType"
+                              buttons
+                              v-model="newFieldType"
+                              :options="newFieldTypes"
+                              name="newFieldType" />
+        <b-button type="button" @click="addField">Add</b-button>
+      </b-form-group>
+    </b-form>
   </div>
 </template>
 
@@ -47,12 +46,19 @@ export default {
         msg: 'welcome to sunrise'
       },
       newFieldKey: 'new-field',
-      newFieldValue: 'Lorem Ipsum'
+      newFieldType: 'string',
+      newFieldTypes: [
+        { text: '""', value: 'string' },
+        { text: '{}', value: 'array' },
+        { text: '[]', value: 'object' }
+      ]
     }
   },
   methods: {
     addField: function () {
-      this.$set(this.fields, this.newFieldKey, this.newFieldValue)
+      const newFieldValue = this.newFieldType === 'object' ? {}
+        : this.newFieldType === 'array' ? [] : ''
+      this.$set(this.fields, this.newFieldKey, newFieldValue)
     },
     deleteField: function (fieldName) {
       this.$delete(this.fields, fieldName)
