@@ -8,6 +8,7 @@ import GlobalErrors from './components/GlobalErrors'
 import DateTime from './components/DateTime'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
+
 Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false

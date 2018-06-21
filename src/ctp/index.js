@@ -2,47 +2,43 @@
 
 import axios from 'axios'
 
-const apiConfig = {
-  projectKey: process.env.CTP_PROJECT_KEY,
-  clientId: process.env.CTP_CLIENT_ID,
-  clientSecret: process.env.CTP_CLIENT_SECRET
-}
+const getCookie = (name) => {
+  const decodedCookie = decodeURIComponent(document.cookie)
+  const cookies = decodedCookie.split(';')
+  const regex = new RegExp(`${name}=(.*)`)
+  const matches = cookies.filter(cookie => regex.test(cookie))
 
-const baseUrl = '/api/' + apiConfig.projectKey
-
-const authConfig = {
-  auth: {
-    username: apiConfig.clientId,
-    password: apiConfig.clientSecret
+  if (matches.length === 1) {
+    return matches[0].match(regex)[1]
+  } else {
+    return ''
   }
 }
 
-const authParams = new URLSearchParams()
-authParams.append('grant_type', 'client_credentials')
-authParams.append('scope', `manage_project:${apiConfig.projectKey}`)
-
-const tokenPromise = axios.post('/auth/oauth/token', authParams, authConfig)
+const baseUrl = 'https://api.commercetools.com'
 
 export default {
-  get: function (path, config = {}) {
-    if (config instanceof URLSearchParams) {
-      config = {
-        params: config
+  get: function (path, params) {
+    const token = getCookie('token')
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      params
+    }
+    const projectKey = getCookie('projectKey')
+    const url = `${baseUrl}/${projectKey}${path}`
+    return axios.get(url, config)
+  },
+  post: function (path, body) {
+    const token = getCookie('token')
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
     }
-    return tokenPromise.then(tokens => {
-      config.headers = {
-        'Authorization': 'Bearer ' + tokens.data.access_token
-      }
-      return axios.get(baseUrl + path, config)
-    })
-  },
-  post: function (path, body, config) {
-    return tokenPromise.then(tokens => {
-      config.headers = {
-        'Authorization': 'Bearer ' + tokens.data.access_token
-      }
-      return axios.post(baseUrl + path, body, config)
-    })
+    const projectKey = getCookie('projectKey')
+    const url = `${baseUrl}/${projectKey}${path}`
+    return axios.post(url, body, config)
   }
 }
