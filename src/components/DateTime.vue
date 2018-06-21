@@ -8,7 +8,7 @@
 import moment from 'moment-timezone'
 
 export default {
-  name: 'dateTime',
+  name: 'DateTime',
   props: ['data'],
   filters: {
     formatDateTime (time, zone) {

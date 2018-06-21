@@ -1,6 +1,29 @@
 <template>
   <div>
-    {{ fields }}
+    <global-errors :errors="errors"/>
+    <hr>
+    <hr>
+    <div v-if="customObjectValue">
+      <div class="">
+        <legend class="col-form-label col-sm-2 pt-0">content</legend>
+        <div class="root-content-editor" v-for="name in Object.keys(customObjectValue.content)" :name="name" :key="name">
+          <div class="full-entry-editor">
+            <div class="container">
+              <div class="row">
+                <div class="col-1">
+                  {{name}}
+                </div>
+                <div class="col">
+                  <entry-editor :value="customObjectValue.content[name]" :name="name"></entry-editor>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
     <b-form>
       <b-form-group label="Key">
         <b-form-input id="key" type="text" :value="key">
@@ -28,11 +51,17 @@
 </template>
 
 <script>
+import client from '../ctp'
 export default {
   name: 'PageEditor',
   data () {
     return {
-      key: 'home',
+      key: this.$route.params.pageKey,
+      customObjectValue: {
+        content: {},
+        dependencies: []
+      },
+      errors: [],
       fields: {
         banner: [
           {
@@ -65,11 +94,25 @@ export default {
     },
     type: function (fieldName) {
       return typeof this.fields[fieldName]
+    },
+    loadData () {
+      const params = new URLSearchParams()
+      params.append('expand', 'value.dependencies[*]')
+      client.get(`/custom-objects/co-cms-pages/${this.key}`, params)
+        .then(res => (this.customObjectValue = res.data.value))
+        .catch(err => this.errors.push(err))
+    },
+    keysOf (o) {
+      return Object.keys(o)
     }
+  },
+  created () {
+    this.loadData()
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.root-content-editor * {margin-bottom: 20px;}
 </style>
