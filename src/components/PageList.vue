@@ -1,24 +1,31 @@
 <template>
   <div>
+    {{x}}
   </div>
 </template>
 
 <script>
+import client from '../ctp'
+
 export default {
   name: 'PageList',
   data () {
     return {
-      pages: {
-        home: {}
-      },
-      newPageKey: 'new-page'
+      x: null
     }
   },
   methods: {
+  },
+  created () {
+    const params = new URLSearchParams()
+    params.append('where', 'container = "co-cms-pages"')
+    params.append('limit', '500')
+    client.get(`/custom-objects`, params)
+      .then(res => (this.x = res))
+      .catch(err => console.log(err))
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
