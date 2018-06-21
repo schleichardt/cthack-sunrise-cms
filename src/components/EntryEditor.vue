@@ -8,12 +8,9 @@
 </template>
 
 <script>
-import ObjectFieldEditor from './ObjectFieldEditor'
-import StringFieldEditor from './StringFieldEditor'
-import ArrayFieldEditor from './ArrayFieldEditor'
 export default {
+  name: 'EntryEditor',
   props: ['value', 'name'],
-  components: {ArrayFieldEditor, ObjectFieldEditor, StringFieldEditor},
   data () {
     return {
 

@@ -1,14 +1,16 @@
 <template>
   <div class="array-editor">
-    array: {{value}}
+    <div v-for="(item, index) in value" :key="index" class="array-entry">
+      <entry-editor :value="item" name="name to give"></entry-editor>
+    </div>
   </div>
 </template>
 
 <script>
-import EntryEditor from './EntryEditor'
+
 export default {
+  name: 'ArrayFieldEditor',
   props: ['value', 'name'],
-  components: {EntryEditor},
   data () {
     return {
       updatedValue: this.value
@@ -18,4 +20,5 @@ export default {
 </script>
 
 <style scoped>
+  .array-entry {border: 1px solid black; margin-bottom: 10px;}
 </style>

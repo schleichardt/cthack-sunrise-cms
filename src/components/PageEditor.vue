@@ -6,7 +6,7 @@
     <div v-if="customObjectValue">
       <div class="">
         <legend class="col-form-label col-sm-2 pt-0">content</legend>
-        <div class="root-content-editor" v-for="name in Object.keys(customObjectValue.content)" :name="name">
+        <div class="root-content-editor" v-for="name in Object.keys(customObjectValue.content)" :name="name" :key="name">
           <div class="full-entry-editor">
             <div class="container">
               <div class="row">
@@ -52,14 +52,8 @@
 
 <script>
 import client from '../ctp'
-import ObjectFieldEditor from './ObjectFieldEditor'
-import StringFieldEditor from './StringFieldEditor'
-import ArrayFieldEditor from './ArrayFieldEditor'
-import EntryEditor from './EntryEditor'
-
 export default {
   name: 'PageEditor',
-  components: {EntryEditor, ObjectFieldEditor, StringFieldEditor, ArrayFieldEditor},
   data () {
     return {
       key: this.$route.params.pageKey,

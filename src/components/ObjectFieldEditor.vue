@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="root-content-editor" v-for="entry in Object.entries(value)">
+    <div class="root-content-editor" v-for="entry in Object.entries(value)" :key="entry[0]">
       <div class="full-entry-editor">
         <div class="container">
           <entry-editor :value="entry[1]" :name="entry[0]"></entry-editor>
@@ -11,11 +11,9 @@
 </template>
 
 <script>
-import EntryEditor from './EntryEditor'
-
 export default {
+  name: 'ObjectFieldEditor',
   props: ['value', 'name'],
-  components: {EntryEditor},
   data () {
     return {
     }
@@ -24,4 +22,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>
