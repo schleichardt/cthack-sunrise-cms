@@ -18,8 +18,8 @@
         <tr v-for="(page, index) in pageQueryResult.results" :key="page.key">
           <th scope="row">{{index + 1}}</th>
           <td><router-link :to="{ name: 'PageEditor', params: { pageKey: page.key }}">{{page.key}}</router-link></td>
-          <td>{{page.createdAt}}</td>
-          <td>{{page.lastModifiedAt}}</td>
+          <td><date-time :data="page.createdAt"></date-time></td>
+          <td><date-time :data="page.lastModifiedAt"></date-time></td>
           <td>{{page.value.dependencies.length}}</td>
         </tr>
       </tbody>

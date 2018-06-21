@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import GlobalErrors from './components/GlobalErrors'
+import DateTime from './components/DateTime'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
 Vue.use(BootstrapVue)
@@ -12,6 +13,7 @@ Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
 Vue.component('GlobalErrors', GlobalErrors)
+Vue.component('DateTime', DateTime)
 
 /* eslint-disable no-new */
 new Vue({
