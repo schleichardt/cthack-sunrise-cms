@@ -57,14 +57,22 @@ export default {
   },
   methods: {
     save: function () {
+      const draftBody = JSON.parse(JSON.stringify(this.customObjectValue))
+      draftBody.dependencies = this.dependencyIds.map(id => {
+        return {
+          id,
+          typeId: 'key-value-document'
+        }
+      })
       const customObjectDraft = {
         container: 'co-cms-pages',
         key: this.key,
-        value: this.customObjectValue
+        value: draftBody
       }
-      client.post('/custom-objects', customObjectDraft)
+      client.post(`/custom-objects`, customObjectDraft)
         .then(res => {
-          this.$set(this, 'customObjectValue', res.data.value)
+          // do not do this, this kills the JSON editor
+          // this.$set(this, 'customObjectValue', res.data.value)
           this.successes.push('pushed changes')
         })
         .catch(err => this.errors.push(err))
