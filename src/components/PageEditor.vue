@@ -6,7 +6,7 @@
     <div class="container">
       <h1>{{key}}</h1>
       <global-errors :errors="errors" :successes="successes" />
-      <v-json-editor v-if="Object.keys(customObjectValue.content).length > 0"
+      <v-json-editor v-if="loaded"
                    :data="customObjectValue.content"
                    :editable="true"
                    @change="$forceUpdate()"></v-json-editor>
@@ -34,6 +34,7 @@ export default {
     return {
       key: this.$route.params.pageKey,
       dependencyIds: [],
+      loaded: false,
       customObjectValue: {
         content: {},
         dependencies: []
@@ -88,6 +89,7 @@ export default {
         .then(res => {
           this.$set(this, 'customObjectValue', res.data.value)
           this.dependencyIds = res.data.value.dependencies.map(d => d.id)
+          this.loaded = true
         })
         .catch(err => this.errors.push(err))
     },
