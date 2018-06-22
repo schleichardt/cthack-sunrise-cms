@@ -20,7 +20,7 @@
           <td><router-link :to="{ name: 'PageEditor', params: { pageKey: page.key }}">{{page.key}}</router-link></td>
           <td><date-time :data="page.createdAt"></date-time></td>
           <td><date-time :data="page.lastModifiedAt"></date-time></td>
-          <td>{{page.value.dependencies.length}}</td>
+          <td>{{page.value.dependencies ? page.value.dependencies.length : 0}}</td>
         </tr>
         <tr>
           <th scope="row"></th>
