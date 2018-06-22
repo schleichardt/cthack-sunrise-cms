@@ -1,13 +1,11 @@
 <template>
-  <div>
+  <div class="container">
     <global-errors :errors="errors"/>
-    <hr>
-    <hr>
     <v-json-editor v-if="Object.keys(customObjectValue.content).length > 0"
       :data="customObjectValue.content"
       :editable="true"
       @change="$forceUpdate()"></v-json-editor>
-    <button type="button" @click="save">Save</button>
+    <button type="button" class="btn btn-primary" @click="save">Save</button>
   </div>
 </template>
 
@@ -22,31 +20,19 @@ export default {
         content: {},
         dependencies: []
       },
-      errors: [],
-      fields: {
-        banner: [
-          {
-            title: 'Sommer Essentials',
-            subtitle: 'Die wichtigsten Stücke des Sommer Trends 2016',
-            linkLabel: 'Jetzt bestellen',
-            link: '/de/men',
-            backgroundImage: '/assets/img/cms/leather1-4to3.jpg'
-          }
-        ],
-        msg: 'welcome to sunrise'
-      },
-      newFieldKey: 'new-field',
-      newFieldType: 'string',
-      newFieldTypes: [
-        { text: '""', value: 'string' },
-        { text: '{}', value: 'array' },
-        { text: '[]', value: 'object' }
-      ]
+      errors: []
     }
   },
   methods: {
     save: function () {
-      return ''
+      const customObjectDraft = {
+        container: 'co-cms-pages',
+        key: this.key,
+        value: this.customObjectValue
+      }
+      client.post('/custom-objects', customObjectDraft)
+        .then(res => this.$set(this, 'customObjectValue', res.data.value))
+        .catch(err => this.errors.push(err))
     },
     addField: function () {
       const newFieldValue = this.newFieldType === 'object' ? {}
