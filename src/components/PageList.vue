@@ -22,6 +22,13 @@
           <td><date-time :data="page.lastModifiedAt"></date-time></td>
           <td>{{page.value.dependencies.length}}</td>
         </tr>
+        <tr>
+          <th scope="row"></th>
+          <td><input type="text" class="form-control" v-model="newPageKey" placeholder="new page"></td>
+          <td><button type="button" class="btn btn-primary" @click="createPage">Create page</button></td>
+          <td></td>
+          <td></td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -35,10 +42,26 @@ export default {
   data () {
     return {
       pageQueryResult: null,
+      newPageKey: null,
       errors: []
     }
   },
   methods: {
+    createPage: function () {
+      const customObjectDraft = {
+        container: 'co-cms-pages',
+        key: this.newPageKey,
+        value: {
+          content: {},
+          dependencies: []
+        }
+      }
+      client.post('/custom-objects', customObjectDraft)
+        .then(res => {
+          this.$router.push({name: 'PageEditor', params: {pageKey: this.newPageKey}})
+        })
+        .catch(err => this.errors.push(err))
+    }
   },
   created () {
     const params = new URLSearchParams()

@@ -2,7 +2,7 @@
   <div class="container">
     <h1>{{key}}</h1>
     <global-errors :errors="errors" :successes="successes" />
-    <v-json-editor v-if="Object.keys(customObjectValue.content).length > 0"
+    <v-json-editor v-if="customObjectValue.content"
                    :data="customObjectValue.content"
                    :editable="true"
                    @change="$forceUpdate()"></v-json-editor>
