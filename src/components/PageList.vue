@@ -21,7 +21,7 @@
           <td><date-time :data="page.createdAt"></date-time></td>
           <td><date-time :data="page.lastModifiedAt"></date-time></td>
           <td>{{page.value.dependencies ? page.value.dependencies.length : 0}}</td>
-          <td><button type="button" class="btn btn-primary" @click="deletePage(page)">Delete</button></td>
+          <td><button type="button" class="btn btn-outline-danger" @click="deletePage(page)">Delete</button></td>
         </tr>
         <tr>
           <th scope="row"></th>
