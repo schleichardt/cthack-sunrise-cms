@@ -60,7 +60,7 @@ export default {
       client.post('/custom-objects', customObjectDraft)
         .then(res => {
           this.$set(this, 'customObjectValue', res.data.value)
-          this.successes = ['pushed changes']
+          this.successes.push('pushed changes')
         })
         .catch(err => this.errors.push(err))
     },
