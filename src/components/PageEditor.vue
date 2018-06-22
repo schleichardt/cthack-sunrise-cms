@@ -3,13 +3,12 @@
     <h1>{{key}}</h1>
     <global-errors :errors="errors"/>
     <v-json-editor v-if="Object.keys(customObjectValue.content).length > 0"
-      :data="customObjectValue.content"
-      :editable="true"
-      @change="$forceUpdate()"></v-json-editor>
+                   :data="customObjectValue.content"
+                   :editable="true"
+                   @change="$forceUpdate()"></v-json-editor>
     <button type="button" class="btn btn-primary" @click="save">Save</button>
 
-
-        <div v-if="customObjectValue">
+    <div v-if="customObjectValue">
       <h2>Dependencies</h2>
       <div v-for="dependencyId in possibleDependencies" :key="dependencyId" class="form-check">
         <input v-model="dependencyIds" :value="dependencyId" class="form-check-input" type="checkbox" :id="'check-dep-' + dependencyId">
@@ -17,6 +16,7 @@
           {{pagesIdToObjectMap[dependencyId].key}}
         </label>
       </div>
+      <button type="button" class="btn btn-primary" @click="save">Save</button>
     </div>
   </div>
 </template>
@@ -82,7 +82,7 @@ export default {
       client.get(`/custom-objects`, params)
         .then(res => {
           this.otherPagesQueryResult = res.data
-          this.otherPagesQueryResult.results.forEach(page => this.pagesIdToObjectMap[page.id] = page)
+          this.otherPagesQueryResult.results.forEach(page => (this.pagesIdToObjectMap[page.id] = page))
         })
         .catch(err => this.errors.push(err))
     }
