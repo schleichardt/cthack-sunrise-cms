@@ -15,7 +15,7 @@ const getCookie = (name) => {
   }
 }
 
-const baseUrl = 'https://api.commercetools.com'
+const baseUrl = '/api'
 
 export default {
   get: function (path, params) {
