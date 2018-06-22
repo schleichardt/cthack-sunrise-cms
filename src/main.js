@@ -12,6 +12,9 @@ import ArrayFieldEditor from './components/ArrayFieldEditor'
 import EntryEditor from './components/EntryEditor'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
+import JsonEditor from 'vue-json-editor-block-view'
+
+Vue.use(JsonEditor)
 
 Vue.use(BootstrapVue)
 

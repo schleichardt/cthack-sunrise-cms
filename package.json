@@ -19,6 +19,7 @@
     "moment-timezone": "^0.5.20",
     "popper.js": "^1.14.3",
     "vue": "^2.5.2",
+    "vue-json-editor-block-view": "^1.0.21",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
