@@ -11,7 +11,7 @@
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit",
     "build": "node build/build.js",
-    "heroku-postbuild": "webpack -p --config ./webpack.dev.config.js --progress"
+    "heroku-postbuild": "webpack -p --config ./config/dev.env.js --progress"
   },
   "dependencies": {
     "bootstrap": "^4.1.1",
