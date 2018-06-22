@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>{{key}}</h1>
-    <global-errors :errors="errors"/>
+    <global-errors :errors="errors" :successes="successes" />
     <v-json-editor v-if="Object.keys(customObjectValue.content).length > 0"
                    :data="customObjectValue.content"
                    :editable="true"
@@ -35,7 +35,8 @@ export default {
       },
       otherPagesQueryResult: null,
       pagesIdToObjectMap: {},
-      errors: []
+      errors: [],
+      successes: []
     }
   },
   computed: {
@@ -57,7 +58,10 @@ export default {
         value: this.customObjectValue
       }
       client.post('/custom-objects', customObjectDraft)
-        .then(res => this.$set(this, 'customObjectValue', res.data.value))
+        .then(res => {
+          this.$set(this, 'customObjectValue', res.data.value)
+          this.successes = ['pushed changes']
+        })
         .catch(err => this.errors.push(err))
     },
     loadData () {
