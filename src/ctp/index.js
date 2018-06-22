@@ -40,5 +40,16 @@ export default {
     const projectKey = getCookie('projectKey')
     const url = `${baseUrl}/${projectKey}${path}`
     return axios.post(url, body, config)
+  },
+  delete: function (path) {
+    const token = getCookie('token')
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }
+    const projectKey = getCookie('projectKey')
+    const url = `${baseUrl}/${projectKey}${path}`
+    return axios.delete(url, config)
   }
 }

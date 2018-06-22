@@ -21,13 +21,15 @@
           <td><date-time :data="page.createdAt"></date-time></td>
           <td><date-time :data="page.lastModifiedAt"></date-time></td>
           <td>{{page.value.dependencies ? page.value.dependencies.length : 0}}</td>
+          <td><button type="button" class="btn btn-primary" @click="deletePage(page)">Delete</button></td>
         </tr>
         <tr>
           <th scope="row"></th>
           <td><input type="text" class="form-control" v-model="newPageKey" placeholder="new page"></td>
-          <td><button type="button" class="btn btn-primary" @click="createPage">Create page</button></td>
           <td></td>
           <td></td>
+          <td></td>
+          <td><button type="button" class="btn btn-primary" @click="createPage">Create</button></td>
         </tr>
       </tbody>
     </table>
@@ -59,6 +61,18 @@ export default {
       client.post('/custom-objects', customObjectDraft)
         .then(res => {
           this.$router.push({name: 'PageEditor', params: {pageKey: this.newPageKey}})
+        })
+        .catch(err => this.errors.push(err))
+    },
+    deletePage: function (page) {
+      client.delete(`/custom-objects/co-cms-pages/${page.key}`)
+        .then(res => {
+          const params = new URLSearchParams()
+          params.append('where', 'container = "co-cms-pages"')
+          params.append('limit', '500')
+          params.append('expand', 'value.dependencies[*]')
+          client.get(`/custom-objects`, params)
+            .then(res => (this.pageQueryResult = res.data))
         })
         .catch(err => this.errors.push(err))
     }
