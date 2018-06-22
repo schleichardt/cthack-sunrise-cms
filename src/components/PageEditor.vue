@@ -6,10 +6,10 @@
     <div class="container">
       <h1>{{key}}</h1>
       <global-errors :errors="errors" :successes="successes" />
-      <v-json-editor v-if="customObjectValue.content"
-                     :data="customObjectValue.content"
-                     :editable="true"
-                     @change="$forceUpdate()"></v-json-editor>
+      <v-json-editor v-if="Object.keys(customObjectValue.content).length > 0"
+                   :data="customObjectValue.content"
+                   :editable="true"
+                   @change="$forceUpdate()"></v-json-editor>
       <button type="button" class="btn btn-primary" @click="save">Save</button>
 
       <div v-if="customObjectValue">
