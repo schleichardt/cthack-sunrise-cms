@@ -6,22 +6,29 @@
     <div class="container">
       <h1>{{key}}</h1>
       <global-errors :errors="errors" :successes="successes" />
-      <v-json-editor v-if="loaded"
-                   :data="customObjectValue.content"
-                   :editable="true"
-                   @change="$forceUpdate()"></v-json-editor>
-      <button type="button" class="btn btn-primary" @click="save">Save</button>
 
-      <div v-if="customObjectValue">
-        <h2>Dependencies</h2>
-        <div v-for="dependencyId in possibleDependencies" :key="dependencyId" class="form-check">
-          <input v-model="dependencyIds" :value="dependencyId" class="form-check-input" type="checkbox" :id="'check-dep-' + dependencyId">
-          <label class="form-check-label" :for="'check-dep-' + dependencyId">
-            {{pagesIdToObjectMap[dependencyId].key}}
-          </label>
-        </div>
+      <div v-if="loaded">
+
         <button type="button" class="btn btn-primary" @click="save">Save</button>
+        <v-json-editor v-if="loaded"
+                       :data="customObjectValue.content"
+                       :editable="true"
+                       @change="$forceUpdate()"></v-json-editor>
+        <button type="button" class="btn btn-primary" @click="save">Save</button>
+
+        <div v-if="customObjectValue">
+          <h2>Dependencies</h2>
+          <div v-for="dependencyId in possibleDependencies" :key="dependencyId" class="form-check">
+            <input v-model="dependencyIds" :value="dependencyId" class="form-check-input" type="checkbox" :id="'check-dep-' + dependencyId">
+            <label class="form-check-label" :for="'check-dep-' + dependencyId">
+              {{pagesIdToObjectMap[dependencyId].key}}
+            </label>
+          </div>
+          <button type="button" class="btn btn-primary" @click="save">Save</button>
+        </div>
+
       </div>
+
     </div>
   </div>
 </template>
